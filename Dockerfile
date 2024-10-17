@@ -21,7 +21,7 @@ RUN mkdir -p /tmp/marmot && \
 
 RUN chmod +x /pb/run.sh
 
-EXPOSE 8080
+EXPOSE 8090
 
 # start PocketBase
 CMD ["/pb/run.sh"]

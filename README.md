@@ -1,3 +1,10 @@
+## Todos
+
+- test pods entry script
+   - create docker image for this test
+   - create namespace and service account
+   - create pullsecret in namespace
+
 # Run pocketbase replicas on kubernetes
 
 ## What is Marmot?

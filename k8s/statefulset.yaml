@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: pocketbase
+  namespace: pocketbase
+spec:
+  serviceName: pocketbase-headless-svc
+  replicas: 2
+  selector:
+    matchLabels:
+      app: pocketbase
+  template:
+    metadata:
+      labels:
+        app: pocketbase
+    spec:
+      serviceAccountName: pocketbase  # Ensure this matches the RoleBinding
+      containers:
+        - name: pocketbase
+          image:  #replace with image created with Dockerfile
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "256Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+          #imagePullPolicy: Always
+          ports:
+            - containerPort: 8090
+          volumeMounts:
+            - name: data
+              mountPath: /app/pb_data #adjust to Dockerfile
+      imagePullSecrets:
+        - name:  #create pull secret in namespace and insert here if necessary
+  volumeClaimTemplates: #can be any type of k8s PVC
+    - metadata:
+        name: data
+        namespace: pocketbase
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 10Gi
+        storageClassName: linode-block-storage

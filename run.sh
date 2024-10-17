@@ -16,12 +16,43 @@ EOD
 tar vxzf ./pb_data.tar.gz
 
 
-/pb/pocketbase serve --http=0.0.0.0:8080 &
+/pb/pocketbase serve --http=0.0.0.0:8090 &
 PB_ID=$!
 
 # Generate Node ID
-NODE_ID=$(echo -n "$FLY_MACHINE_ID" | md5sum | cut -d' ' -f1 | rev | cut -c1-8 | tr -d '\n' | od -A n -vt u8)
+NODE_ID=$(echo $POD_UID)
 
+### TEST BELOW SCRIPT
+
+# Get pod's own name
+POD_NAME=$(hostname)
+
+   # Get namespace
+NAMESPACE=$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace)
+
+   # Get ServiceAccount token
+TOKEN=$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)
+
+   # API Server
+API_SERVER="https://kubernetes.default.svc"
+
+   # Label selector (adjust to match your pods' labels)
+LABEL_SELECTOR="app=marmot"
+
+   # Get list of pod IPs in the same StatefulSet
+PEER_PODS=$(curl -sSk -H "Authorization: Bearer $TOKEN" \
+  $API_SERVER/api/v1/namespaces/$NAMESPACE/pods?labelSelector=$LABEL_SELECTOR \
+  | jq -r '.items[] | select(.status.phase=="Running") | select(.metadata.name != "'$POD_NAME'") | .status.podIP')
+
+   # Initialize an empty list for peer addresses
+PEER_ADDRESSES=""
+
+   # Loop over the peer pod IPs
+for IP in $PEER_PODS; do
+  PEER_ADDRESSES="${PEER_ADDRESSES} dns://${IP}:4221/"
+done
+
+###
 
 MARMOT_CONFIG=$(cat << EOM
 db_path="/pb/pb_data/data.db"
@@ -69,7 +100,7 @@ while true; do
     # Launch!
     echo "Launching marmot ..."
     GOMEMLIMT=32MiB \
-    /pb/marmot -config ./marmot-config.toml -cluster-addr "[${FLY_PRIVATE_IP}]:4222" -cluster-peers "dns://global.${FLY_APP_NAME}.internal:4222/" &
+    /pb/marmot -config ./marmot-config.toml -cluster-addr 0.0.0.0:4221 -cluster-peers "dns://global.${FLY_APP_NAME}.internal:4222/" &
     MARMOT_ID=$!
 
     # Wait for marmot to exit
