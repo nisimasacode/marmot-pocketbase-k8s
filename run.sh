@@ -37,7 +37,7 @@ TOKEN=$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)
 API_SERVER="https://kubernetes.default.svc"
 
    # Label selector (adjust to match your pods' labels)
-LABEL_SELECTOR="app=marmot"
+LABEL_SELECTOR="app=pocketbase"
 
    # Get list of pod IPs in the same StatefulSet
 PEER_PODS=$(curl -sSk -H "Authorization: Bearer $TOKEN" \
