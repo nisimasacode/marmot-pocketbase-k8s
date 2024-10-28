@@ -2,11 +2,14 @@
    kind: Service
    metadata:
      name: pocketbase-svc-1
+     namespace: pocketbase
    spec:
      selector:
        statefulset.kubernetes.io/pod-name: pocketbase-1
      ports:
      - port: 8090
        targetPort: 8090
+       name: pocketbase
      - port: 4221
        targetPort: 4221
+       name: marmot
