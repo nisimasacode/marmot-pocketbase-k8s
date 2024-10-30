@@ -17,14 +17,14 @@ spec:
       serviceAccountName: pocketbase  # Ensure this matches the RoleBinding
       containers:
         - name: pocketbase
-          image: registry.relentlessapproach.com/nisimasacode/pocketbase_marmot:dev_4 #replace with image created with Dockerfile
+          image: registry.relentlessapproach.com/nisimasacode/pocketbase_marmot:dev_5 #replace with image created with Dockerfile
           resources:
             requests:
+              cpu: "50m"
+              memory: "128Mi"
+            limits:
               cpu: "100m"
               memory: "256Mi"
-            limits:
-              cpu: "500m"
-              memory: "512Mi"
           #imagePullPolicy: Always
           ports:
             - containerPort: 8090
@@ -32,13 +32,18 @@ spec:
             - containerPort: 4221
               name: marmot
           volumeMounts:
-            - name: data
+            - name: marmot-test
               mountPath: /pb/pb_data #adjust to Dockerfile
+          env:
+            - name: POD_UID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.uid
       imagePullSecrets:
         - name: regcred-pocketbase #create pull secret in namespace and insert here if necessary
   volumeClaimTemplates: #can be any type of k8s PVC
     - metadata:
-        name: data
+        name: marmot-test
         namespace: pocketbase
       spec:
         accessModes: [ "ReadWriteOnce" ]

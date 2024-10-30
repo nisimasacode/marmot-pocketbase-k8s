@@ -1,0 +1,224 @@
+{
+    "apiVersion": "v1",
+    "kind": "Pod",
+    "metadata": {
+        "annotations": {
+            "cni.projectcalico.org/containerID": "17d56ba1decdf2755dd3bf4ab848ce85c1f4cf569d0ee32e59bb68f0b97a6af7",
+            "cni.projectcalico.org/podIP": "10.2.0.219/32",
+            "cni.projectcalico.org/podIPs": "10.2.0.219/32"
+        },
+        "creationTimestamp": "2024-10-30T14:21:00Z",
+        "generateName": "pocketbase-",
+        "labels": {
+            "app": "pocketbase",
+            "apps.kubernetes.io/pod-index": "0",
+            "controller-revision-hash": "pocketbase-b9f549f4d",
+            "statefulset.kubernetes.io/pod-name": "pocketbase-0"
+        },
+        "name": "pocketbase-0",
+        "namespace": "pocketbase",
+        "ownerReferences": [
+            {
+                "apiVersion": "apps/v1",
+                "blockOwnerDeletion": true,
+                "controller": true,
+                "kind": "StatefulSet",
+                "name": "pocketbase",
+                "uid": "4a708c82-5cc6-4a1b-88d5-7b8949c3da09"
+            }
+        ],
+        "resourceVersion": "17175625",
+        "uid": "04a61043-7880-4bcd-acda-6aae13dd8579"
+    },
+    "spec": {
+        "containers": [
+            {
+                "image": "registry.relentlessapproach.com/nisimasacode/pocketbase_marmot:dev_5",
+                "imagePullPolicy": "IfNotPresent",
+                "name": "pocketbase",
+                "ports": [
+                    {
+                        "containerPort": 8090,
+                        "name": "pocketbase",
+                        "protocol": "TCP"
+                    },
+                    {
+                        "containerPort": 4221,
+                        "name": "marmot",
+                        "protocol": "TCP"
+                    }
+                ],
+                "resources": {
+                    "limits": {
+                        "cpu": "100m",
+                        "memory": "256Mi"
+                    },
+                    "requests": {
+                        "cpu": "50m",
+                        "memory": "128Mi"
+                    }
+                },
+                "terminationMessagePath": "/dev/termination-log",
+                "terminationMessagePolicy": "File",
+                "volumeMounts": [
+                    {
+                        "mountPath": "/pb/pb_data",
+                        "name": "marmot-test"
+                    },
+                    {
+                        "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                        "name": "kube-api-access-z86j9",
+                        "readOnly": true
+                    }
+                ]
+            }
+        ],
+        "dnsPolicy": "ClusterFirst",
+        "enableServiceLinks": true,
+        "hostname": "pocketbase-0",
+        "imagePullSecrets": [
+            {
+                "name": "regcred-pocketbase"
+            }
+        ],
+        "nodeName": "lke222898-322281-4e5643a80000",
+        "preemptionPolicy": "PreemptLowerPriority",
+        "priority": 0,
+        "restartPolicy": "Always",
+        "schedulerName": "default-scheduler",
+        "securityContext": {},
+        "serviceAccount": "pocketbase",
+        "serviceAccountName": "pocketbase",
+        "subdomain": "pocketbase-headless-svc",
+        "terminationGracePeriodSeconds": 30,
+        "tolerations": [
+            {
+                "effect": "NoExecute",
+                "key": "node.kubernetes.io/not-ready",
+                "operator": "Exists",
+                "tolerationSeconds": 300
+            },
+            {
+                "effect": "NoExecute",
+                "key": "node.kubernetes.io/unreachable",
+                "operator": "Exists",
+                "tolerationSeconds": 300
+            }
+        ],
+        "volumes": [
+            {
+                "name": "marmot-test",
+                "persistentVolumeClaim": {
+                    "claimName": "marmot-test-pocketbase-0"
+                }
+            },
+            {
+                "name": "kube-api-access-z86j9",
+                "projected": {
+                    "defaultMode": 420,
+                    "sources": [
+                        {
+                            "serviceAccountToken": {
+                                "expirationSeconds": 3607,
+                                "path": "token"
+                            }
+                        },
+                        {
+                            "configMap": {
+                                "items": [
+                                    {
+                                        "key": "ca.crt",
+                                        "path": "ca.crt"
+                                    }
+                                ],
+                                "name": "kube-root-ca.crt"
+                            }
+                        },
+                        {
+                            "downwardAPI": {
+                                "items": [
+                                    {
+                                        "fieldRef": {
+                                            "apiVersion": "v1",
+                                            "fieldPath": "metadata.namespace"
+                                        },
+                                        "path": "namespace"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    "status": {
+        "conditions": [
+            {
+                "lastProbeTime": null,
+                "lastTransitionTime": "2024-10-30T14:21:12Z",
+                "status": "True",
+                "type": "PodReadyToStartContainers"
+            },
+            {
+                "lastProbeTime": null,
+                "lastTransitionTime": "2024-10-30T14:21:00Z",
+                "status": "True",
+                "type": "Initialized"
+            },
+            {
+                "lastProbeTime": null,
+                "lastTransitionTime": "2024-10-30T14:21:12Z",
+                "status": "True",
+                "type": "Ready"
+            },
+            {
+                "lastProbeTime": null,
+                "lastTransitionTime": "2024-10-30T14:21:12Z",
+                "status": "True",
+                "type": "ContainersReady"
+            },
+            {
+                "lastProbeTime": null,
+                "lastTransitionTime": "2024-10-30T14:21:00Z",
+                "status": "True",
+                "type": "PodScheduled"
+            }
+        ],
+        "containerStatuses": [
+            {
+                "containerID": "containerd://1f7de23389bbaf90807c93b1b5429a9d51c67a36ef2df77f8fc200f513b283e0",
+                "image": "registry.relentlessapproach.com/nisimasacode/pocketbase_marmot:dev_5",
+                "imageID": "registry.relentlessapproach.com/nisimasacode/pocketbase_marmot@sha256:1f1f8c2cab4edbe9bde5613956306016bdba441720b97187f8126f96d6d3b1d0",
+                "lastState": {},
+                "name": "pocketbase",
+                "ready": true,
+                "restartCount": 0,
+                "started": true,
+                "state": {
+                    "running": {
+                        "startedAt": "2024-10-30T14:21:12Z"
+                    }
+                }
+            }
+        ],
+        "hostIP": "192.168.161.178",
+        "hostIPs": [
+            {
+                "ip": "192.168.161.178"
+            },
+            {
+                "ip": "2a01:7e01::f03c:95ff:fec2:30af"
+            }
+        ],
+        "phase": "Running",
+        "podIP": "10.2.0.219",
+        "podIPs": [
+            {
+                "ip": "10.2.0.219"
+            }
+        ],
+        "qosClass": "Burstable",
+        "startTime": "2024-10-30T14:21:00Z"
+    }
+}

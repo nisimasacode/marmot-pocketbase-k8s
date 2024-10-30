@@ -3,7 +3,7 @@ FROM debian:bookworm-slim
 ARG PB_VERSION=0.22.22
 ARG MARMOT_VERSION=v0.8.7
 
-RUN apt update && apt install unzip dnsutils sqlite3 curl wget htop -y
+RUN apt update && apt install unzip dnsutils sqlite3 curl wget htop jq -y
     
 
 # download and unzip PocketBase
