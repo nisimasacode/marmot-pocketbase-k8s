@@ -1,10 +1,9 @@
-## Todos
+## Status & Todos
 
-- test pods entry script
-   - create docker image for this test (done)
-   - create namespace and service account (done)
-   - create pullsecret in namespace (done)
-   - keep testing run.sh via kubectl exec (use /bin/bash)
+Replicas are running and discover each other.
+
+- Find solution for more then two replicas
+- Update documentation
 
 # Run pocketbase replicas on kubernetes
 
