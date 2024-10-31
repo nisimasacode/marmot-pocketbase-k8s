@@ -8,5 +8,5 @@
      name: pocketbase  # Change if using a different ServiceAccount
    roleRef:
      kind: Role
-     name: marmot-pod-reader
+     name: pocketbase-pod-reader
      apiGroup: rbac.authorization.k8s.io

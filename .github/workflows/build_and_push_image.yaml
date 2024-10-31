@@ -1,0 +1,51 @@
+name: Build and Push Docker Image Frontend
+
+on:
+  push:
+    branches:
+      - main  # Replace with the branches you want to trigger on
+
+jobs:
+  build_and_push:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout the repository to the runner
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      # Set up Docker Buildx (for advanced build capabilities)
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+        
+      # Log in to your private Docker registry
+      - name: Log in to Registry
+        uses: docker/login-action@v2
+        with:
+          registry: registry.relentlessapproach.com
+          username: ${{ secrets.REGISTRY_USERNAME }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}
+      
+      # Determine the new version number
+      - name: Increment Version
+        id: vars
+        run: |
+          echo "Determining new version number..."
+          # Base version (change as needed)
+          BASE_VERSION=1.0
+          # Use GitHub run number to increment version
+          BUILD_NUMBER=${GITHUB_RUN_NUMBER}
+          # Combine base version and build number
+          NEW_VERSION="$BASE_VERSION.$BUILD_NUMBER"
+          echo "NEW_VERSION=$NEW_VERSION"
+          # Set the output variable 'version'
+          echo "version=$NEW_VERSION" >> $GITHUB_OUTPUT
+          
+      # Build and push the Docker image to your registry
+      - name: Build and Push Docker Image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: Dockerfile
+          push: true
+          tags: |
+            registry.relentlessapproach.com/nisimasacode/pocketbase_marmot:${{ steps.vars.outputs.version }}
