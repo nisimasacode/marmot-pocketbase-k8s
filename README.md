@@ -2,6 +2,7 @@
 
 Replicas are running and discover each other.
 
+- do we need fly.toml ?
 - Find solution for more then two replicas
 - Update documentation
 

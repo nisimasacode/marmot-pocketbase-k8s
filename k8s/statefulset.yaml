@@ -39,10 +39,6 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.uid
-            - name: POD_NAME
-              valueFrom:
-                fieldRef:
-                  fieldPath: metadata.name
       imagePullSecrets:
         - name: regcred-pocketbase #create pull secret in namespace and insert here if necessary
   volumeClaimTemplates: #can be any type of k8s PVC
