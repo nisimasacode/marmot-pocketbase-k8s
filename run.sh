@@ -25,12 +25,12 @@ NODE_ID=$(echo $POD_UID)
 HOSTNAME=$(hostname)
 LAST_CHAR="${HOSTNAME: -1}"
 
-NUMBER="$LAST_CHAR"
+NODE_ID="$LAST_CHAR"
 
-if [ "$NUMBER" -eq 0 ]; then
-    NUMBER=1
-elif [ "$NUMBER" -eq 1 ]; then
-    NUMBER=0
+if [ "$NODE_ID" -eq 0 ]; then
+    NODE_ID=1
+elif [ "$NODE_ID" -eq 1 ]; then
+    NODE_ID=0
 fi
 
   # Get namespace
@@ -95,7 +95,7 @@ while true; do
     # Launch!
     echo "Launching marmot ..."
     GOMEMLIMT=32MiB \
-    /pb/marmot -config ./marmot-config.toml -cluster-addr 0.0.0.0:4221 -cluster-peers "dns://pocketbase-svc-${number}.pocketbase.svc.cluster.local:4221/" &
+    /pb/marmot -config ./marmot-config.toml -cluster-addr 0.0.0.0:4221 -cluster-peers "dns://pocketbase-svc-${NODE_ID}.pocketbase.svc.cluster.local:4221/" &
     MARMOT_ID=$!
 
     # Wait for marmot to exit
