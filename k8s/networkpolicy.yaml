@@ -11,6 +11,21 @@ spec:
   ingress:
   - from:
     - podSelector: {}
+  - from:
+    - ipBlock:
+        cidr: 10.128.0.1/32
   egress:
   - to:
     - podSelector: {}
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: kube-system
+    ports:
+    - port: 53
+      protocol: UDP
+    - port: 53
+      protocol: TCP
+  - to:
+    - ipBlock:
+        cidr: 10.128.0.1/32  # Replace with your kubernetes service ClusterIP
