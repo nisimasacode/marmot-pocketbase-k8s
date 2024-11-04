@@ -23,15 +23,7 @@ PB_ID=$!
 NODE_ID=$(echo $POD_UID)
 
 HOSTNAME=$(hostname)
-LAST_CHAR="${HOSTNAME: -1}"
-
-NODE_ID="$LAST_CHAR"
-
-if [ "$NODE_ID" -eq 0 ]; then
-    NODE_ID=1
-elif [ "$NODE_ID" -eq 1 ]; then
-    NODE_ID=0
-fi
+NODE_ID="${HOSTNAME: -1}"
 
   # Get namespace
 NAMESPACE=$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace)
