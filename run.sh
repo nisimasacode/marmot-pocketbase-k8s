@@ -20,8 +20,6 @@ tar vxzf ./pb_data.tar.gz
 PB_ID=$!
 
 # Generate Node ID
-NODE_ID=$(echo $POD_UID)
-
 HOSTNAME=$(hostname)
 NODE_ID="${HOSTNAME: -1}"
 
@@ -87,7 +85,7 @@ while true; do
     # Launch!
     echo "Launching marmot ..."
     GOMEMLIMT=32MiB \
-    /pb/marmot -config ./marmot-config.toml -cluster-addr 0.0.0.0:4221 -cluster-peers "dns://pocketbase-svc-${NODE_ID}.pocketbase.svc.cluster.local:4221/" &
+    /pb/marmot -config ./marmot-config.toml -cluster-addr 0.0.0.0:4221 -cluster-peers "dns+srv://pocketbase-headless-svc.pocketbase.svc.cluster.local:4221/" &
     MARMOT_ID=$!
 
     # Wait for marmot to exit
