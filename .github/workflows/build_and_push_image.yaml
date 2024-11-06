@@ -49,3 +49,4 @@ jobs:
           push: true
           tags: |
             registry.relentlessapproach.com/nisimasacode/pocketbase_marmot:${{ steps.vars.outputs.version }}
+            registry.relentlessapproach.com/nisimasacode/pocketbase_marmot:latest

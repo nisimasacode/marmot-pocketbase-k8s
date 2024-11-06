@@ -2,8 +2,9 @@
 
 Replicas are running and discover each other.
 
-- do we need fly.toml ?
-- Find solution for more then two replicas
+- test with 3 replicas
+- open questions:
+   - Can a node resync if it was "gone" for some time?
 - Update documentation
 
 # Run pocketbase replicas on kubernetes

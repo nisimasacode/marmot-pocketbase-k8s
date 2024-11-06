@@ -5,7 +5,7 @@ metadata:
   namespace: pocketbase
 spec:
   serviceName: pocketbase-headless-svc
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
       app: pocketbase
@@ -17,7 +17,7 @@ spec:
       serviceAccountName: pocketbase  # Ensure this matches the RoleBinding
       containers:
         - name: pocketbase
-          image: registry.relentlessapproach.com/nisimasacode/pocketbase_marmot:1.0.2 #replace with image created with Dockerfile
+          image: registry.relentlessapproach.com/nisimasacode/pocketbase_marmot:1.0.8 #replace with image created with Dockerfile
           resources:
             requests:
               cpu: "50m"
