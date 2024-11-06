@@ -17,7 +17,7 @@ spec:
       serviceAccountName: pocketbase  # Ensure this matches the RoleBinding
       containers:
         - name: pocketbase
-          image: registry.relentlessapproach.com/nisimasacode/pocketbase_marmot:1.0.8 #replace with image created with Dockerfile
+          image: registry.relentlessapproach.com/nisimasacode/pocketbase_marmot:latest #replace with image created with Dockerfile
           resources:
             requests:
               cpu: "50m"
