@@ -23,22 +23,6 @@ PB_ID=$!
 HOSTNAME=$(hostname)
 NODE_ID="${HOSTNAME: -1}"
 
-  # Get namespace
-NAMESPACE=$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace)
-
-   # Get ServiceAccount token
-TOKEN=$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)
-
-   # API Server
-#API_SERVER="https://kubernetes.default.svc"
-API_SERVER="https://kubernetes.default.svc.cluster.local"
-
-
-   # Label selector (adjust to match your pods' labels)
-LABEL_SELECTOR="app=pocketbase"
-
-  ### TEST BELOW SCRIPT
-
 MARMOT_CONFIG=$(cat << EOM
 db_path="/pb/pb_data/data.db"
 node_id=${NODE_ID}

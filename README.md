@@ -2,9 +2,9 @@
 
 Replicas are running and discover each other.
 
-- test with 3 replicas
 - open questions:
    - Can a node resync if it was "gone" for some time?
+- fix initial data import failure
 - Update documentation
 
 # Run pocketbase replicas on kubernetes
