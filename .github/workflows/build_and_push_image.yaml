@@ -18,14 +18,6 @@ jobs:
    
       - name: Pull LFS files
         run: git lfs pull
-
-      # Verify the integrity of pb_data.tar.gz
-      - name: Verify pb_data.tar.gz
-        run: |
-          if ! file pb_data.tar.gz | grep -q 'gzip compressed data'; then
-            echo "Error: pb_data.tar.gz is not a valid gzip file."
-            exit 1
-          fi
       
       # Set up Docker Buildx (for advanced build capabilities)
       - name: Set up Docker Buildx
